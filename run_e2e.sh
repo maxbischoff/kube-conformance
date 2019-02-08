@@ -47,6 +47,12 @@ case ${E2E_PARALLEL} in
     [1-9]|[1-9][0-9]*) ginkgo_args+=("--nodes=${E2E_PARALLEL}") ;;
 esac
 
+if [ -n "${E2E_REGISTRY+set}" ]; then
+    export KUBE_TEST_REPO_LIST=/tmp/repo-list.yaml
+    sed -e "s;REGISTRY;$E2E_REGISTRY;g" /etc/kube-conformance/repo-list.yaml.template > $KUBE_TEST_REPO_LIST
+    echo "Set Container registries in $KUBE_TEST_REPO_LIST to $E2E_REGISTRY"
+fi
+
 echo "/usr/local/bin/ginkgo ${ginkgo_args[@]} /usr/local/bin/e2e.test -- --disable-log-dump --repo-root=/kubernetes --provider=\"${E2E_PROVIDER}\" --report-dir=\"${RESULTS_DIR}\" --kubeconfig=\"${KUBECONFIG}\""
 /usr/local/bin/ginkgo "${ginkgo_args[@]}" /usr/local/bin/e2e.test -- --disable-log-dump --repo-root=/kubernetes --provider="${E2E_PROVIDER}" --report-dir="${RESULTS_DIR}" --kubeconfig="${KUBECONFIG}" | tee ${RESULTS_DIR}/e2e.log &
 # $! is the pid of tee, not ginkgo

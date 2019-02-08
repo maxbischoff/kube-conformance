@@ -25,6 +25,7 @@ COPY e2e.test /usr/local/bin/
 COPY kubectl /usr/local/bin/
 COPY run_e2e.sh /run_e2e.sh
 COPY cluster /kubernetes/cluster
+COPY repo-list.yaml.template /etc/kube-conformance/repo-list.yaml.template
 WORKDIR /usr/local/bin
 
 ENV E2E_FOCUS="\[Conformance\]"

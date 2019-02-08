@@ -1,0 +1,5 @@
+dockerLibraryRegistry: "REGISTRY"
+e2eRegistry: "REGISTRY"
+gcRegistry: "REGISTRY"
+privateRegistry: "REGISTRY"
+sampleRegistry: "REGISTRY"
